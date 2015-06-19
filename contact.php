@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $email = trim($_POST["email"]);
   $message = trim($_POST["message"]);
 
-  if ($name == "" or $email == "" or $message) {
+  if ($name == "" or $email == "" or $message == "") {
     echo "You must specify a value for a name, email address and message.";
     exit;
   }
@@ -25,12 +25,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
   }
 
+  date_default_timezone_set('Europe/Paris');
+  require_once('includes/phpmailer/PHPMailerAutoload.php');
 
-  $email_body = "";
-  $email_body = "Name: ".$name;
-  $email_body = $email_body . "\nEmail: ".$email;
-  $email_body = $email_body . "\nMessage: ".$message;
-  echo $email_body;
+  $mail = new PHPMailer();
+
+  if (!$mail->ValidateAddress($email)) {
+    echo "You must specify a valid email address.";
+    exit;
+  }
+
+$mail->isSMTP();
+
+//Enable SMTP debugging
+// 0 = off (for production use)
+// 1 = client messages
+// 2 = client and server messages
+$mail->SMTPDebug = 2;
+//Ask for HTML-friendly debug output
+$mail->Debugoutput = 'html';
+//Set the hostname of the mail server
+$mail->Host = 'smtp.gmail.com';
+//Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
+$mail->Port = 587;
+//Set the encryption system to use - ssl (deprecated) or tls
+$mail->SMTPSecure = 'tls';
+//Whether to use SMTP authentication
+$mail->SMTPAuth = true;
+//Username to use for SMTP authentication - use full email address for gmail
+$mail->Username = "iainDOTdiamondATgmailDOTcom";
+//Password to use for SMTP authentication
+$mail->Password = "thisisnotmypasswordnoreallyimnotjoking";
+//Set who the message is to be sent from
+$mail->setFrom($email, $name);
+//Set who the message is to be sent to
+$mail->addAddress('iainDOTdiamondATgmailDOTcom', 'Iain Diamond');
+//Set the subject line
+$mail->Subject = 'PHPMailer GMail SMTP test';
+//Read an HTML message body from an external file, convert referenced images to embedded,
+//convert HTML into a basic plain-text alternative body
+$mail->msgHTML($message);
+
+//send the message, check for errors
+// if (!$mail->send()) {
+//     echo "Mailer Error: " . $mail->ErrorInfo;
+//     exit;
+// }
 
   # We'll learn to send an email in the future!
 
