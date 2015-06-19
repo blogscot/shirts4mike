@@ -2,9 +2,29 @@
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $name = $_POST["name"];
-  $email = $_POST["email"];
-  $message = $_POST["message"];
+  $name = trim($_POST["name"]);
+  $email = trim($_POST["email"]);
+  $message = trim($_POST["message"]);
+
+  if ($name == "" or $email == "" or $message) {
+    echo "You must specify a value for a name, email address and message.";
+    exit;
+  }
+
+  # Prevent PHP Email header injection SNIPPET
+  foreach( $_POST as $value) {
+    if ( stripos($value, 'Content-Type:') != FALSE) {
+      echo "There was a problem with the information you entered.";
+      exit;
+    }
+  }
+
+  # Prevent spam bots
+  if ($_POST['address'] != "") {
+    echo "Your form submission has an error.";
+    exit;
+  }
+
 
   $email_body = "";
   $email_body = "Name: ".$name;
@@ -41,6 +61,10 @@ include('includes/header.php'); ?>
       <label for="message">Message</label>
       <textarea name="message" id="message" rows="10"></textarea><br>
       <input type="submit" value="Send">
+      <div style="display: none;">
+        <label for="address">Address</label>
+        <input id="address" type="text" name="address" placeholder="Please leave blank"><br>
+      </div>
     </form>
   <?php } ?>
   </div>
