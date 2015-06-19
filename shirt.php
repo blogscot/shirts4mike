@@ -1,8 +1,18 @@
 <?php 
 include ("includes/products.php");
 
-$product_id = $_GET["id"];
-$product = $products[$product_id];
+# validate user variables
+if (isset($_GET["id"])) {
+  $product_id = $_GET["id"];
+  if (isset($products[$product_id])) {
+    $product = $products[$product_id];
+  }
+}
+if (!isset($product)) {
+  header("Location: shirts.php");
+  exit();
+}
+
 
 $section = "shirts";
 $pageTitle = $product["name"];
@@ -53,10 +63,6 @@ include ("includes/header.php"); ?>
 
       </div>
   </div>
-
-
-
-
 </div>
 <?php include ("includes/footer.php") ?>
 
