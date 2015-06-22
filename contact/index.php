@@ -1,5 +1,7 @@
 <?php
 
+require_once('../includes/config.php');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $name = trim($_POST["name"]);
@@ -25,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   date_default_timezone_set('Europe/Paris');
-  require_once('includes/phpmailer/PHPMailerAutoload.php');
+  require_once(ROOT_PATH.'includes/phpmailer/PHPMailerAutoload.php');
 
   $mail = new PHPMailer();
 
@@ -52,13 +54,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //Whether to use SMTP authentication
     $mail->SMTPAuth = true;
     //Username to use for SMTP authentication - use full email address for gmail
-    $mail->Username = "iainDOTdiamondATgmailDOTcom";
+    $mail->Username = "iainDOTdiamond1ATgmailDOTcom";
     //Password to use for SMTP authentication
     $mail->Password = "thisisnotmypasswordnoreallyimnotjoking";
     //Set who the message is to be sent from
     $mail->setFrom($email, $name);
     //Set who the message is to be sent to
-    $mail->addAddress('iainDOTdiamondATgmailDOTcom', 'Iain Diamond');
+    $mail->addAddress('example@gmail.com', 'Iain Diamond');
     //Set the subject line
     $mail->Subject = 'PHPMailer GMail SMTP test';
     //Read an HTML message body from an external file, convert referenced images to embedded,
@@ -67,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // send the message, check for errors
     // if ($mail->send()) {
-    //   header("Location: contact.php?status=thanks");
+    //   header("Location: ". BASE_URL ." contact?status=thanks");
     //   exit;
     // } else {
     //   $error_message = "Mailer Error: ". $mail->ErrorInfo;
@@ -78,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $pageTitle = "Contact";
 $siteName = "Shirts 4 Mike";
 $section = "contact";
-include('includes/header.php'); ?>
+include(ROOT_PATH .'includes/header.php'); ?>
 
 <div class="section page">
 
@@ -95,7 +97,7 @@ include('includes/header.php'); ?>
       echo '<p class="message">'. $error_message .'</p>';
       } ?>
 
-    <form action="contact.php" method="POST">
+    <form action="<?php echo BASE_URL; ?>contact/" method="POST">
       <label for="name">Name</label>
       <input id="name" type="text" name="name" value="<?php if (isset($name)) { echo htmlspecialchars($name); } ?>" placeholder="Enter your name"><br>
       <label for="email">Email</label>
@@ -113,4 +115,4 @@ include('includes/header.php'); ?>
     
 </div>
 
-<?php include('includes/footer.php'); ?>
+<?php include(ROOT_PATH .'includes/footer.php'); ?>

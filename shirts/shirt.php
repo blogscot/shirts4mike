@@ -1,5 +1,6 @@
 <?php 
-include ("includes/products.php");
+require_once('../includes/config.php');
+require_once(ROOT_PATH ."includes/products.php");
 
 # validate user variables
 if (isset($_GET["id"])) {
@@ -9,23 +10,23 @@ if (isset($_GET["id"])) {
   }
 }
 if (!isset($product)) {
-  header("Location: shirts.php");
+  header("Location: ". BASE_URL ."shirts/");
   exit();
 }
 
 
 $section = "shirts";
 $pageTitle = $product["name"];
-include ("includes/header.php"); ?>
+include (ROOT_PATH ."includes/header.php"); ?>
 
 <div class="section page">
 
   <div class="wrapper">
     <div class="breadcrumb">
-      <a href="shirts.php">Shirts</a> &gt; <?php echo $product['name'] ?></div>
+      <a href="<?php echo BASE_URL; ?>shirts/">Shirts</a> &gt; <?php echo $product['name'] ?></div>
       <div class="shirt-picture">
         <span>
-          <img src="<?php echo $product['img']; ?>" alt="<?php echo $product['name']; ?>">
+          <img src="<?php echo BASE_URL . $product['img']; ?>" alt="<?php echo $product['name']; ?>">
         </span>
       </div>
 
@@ -63,5 +64,5 @@ include ("includes/header.php"); ?>
       </div>
   </div>
 </div>
-<?php include ("includes/footer.php") ?>
+<?php include (ROOT_PATH ."includes/footer.php") ?>
 
