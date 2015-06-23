@@ -1,7 +1,9 @@
 <?php 
 
 require_once('includes/config.php');
-
+require_once(ROOT_PATH .'includes/products.php');
+$recent_products = get_recent_products(4);
+					
 $pageTitle = "Home";
 $siteName = "Shirts 4 Mike";
 $section = "";
@@ -24,18 +26,11 @@ include(ROOT_PATH .'includes/header.php');
 			<div class="wrapper">
 				<h2>Mike&rsquo;s Latest Shirts</h2>
 
-				<?php require_once(ROOT_PATH .'includes/products.php'); ?>
-
 				<ul class="products">
 				<?php 
-					$total_products = count($products);
-					$position = 0;
 					$list_view = "";
-					foreach ($products as $product_id => $product) { 
-						$position = $position + 1;
-						if ($total_products - $position < 4) {
-						  $list_view = get_list_view_html($product_id, $product) . $list_view;
-						}
+					foreach ($recent_products as $product) { 
+					  $list_view = get_list_view_html($product) . $list_view;
 					 }
 					 echo $list_view; 
 				 ?>				

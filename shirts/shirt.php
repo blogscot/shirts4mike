@@ -1,6 +1,7 @@
 <?php 
 require_once('../includes/config.php');
 require_once(ROOT_PATH ."includes/products.php");
+$products = get_all_products();
 
 # validate user variables
 if (isset($_GET["id"])) {

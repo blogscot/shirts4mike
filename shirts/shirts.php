@@ -3,6 +3,7 @@
 require_once('../includes/config.php');
 
 require_once(ROOT_PATH."includes/products.php");
+$products = get_all_products();
 
 $pageTitle = "Shirts";
 $siteName = "Shirts 4 Mike";
@@ -15,8 +16,8 @@ include(ROOT_PATH .'includes/header.php'); ?>
     <h1>Mike&rsquo;s Full Catalog of Shirts</h1>
   
     <ul class="products">
-      <?php foreach ($products as $product_id => $product) { 
-        echo get_list_view_html($product_id, $product);
+      <?php foreach ($products as $product) { 
+        echo get_list_view_html($product);
        } ?>
     </ul>
 
