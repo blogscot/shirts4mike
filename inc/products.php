@@ -30,6 +30,17 @@ function get_products_recent() {
     return $recent;
 }
 
+function get_products_search($s) {
+    $results = [];
+    $products = get_products_all();
+    foreach($products as $product) {
+        if (stripos($product["name"], $s) !== false) {
+            $results[] = $product;
+        }
+    }
+    return $results;
+}
+
 function get_products_all() {
     $products = array();
     $products[101] = array(
