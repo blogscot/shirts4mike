@@ -14,6 +14,21 @@ function get_list_view_html($product) {
     return $output;
 }
 
+function get_products_count() {
+    return count(get_products_all());
+}
+
+function get_products_subset($start, $end) {
+    $subset = [];
+    $all = get_products_all();
+    $start += 100;
+    $end += 100;
+    for ($i = $start; $i < $end + 1; $i++) {
+        $subset[] = $all[$i];
+    }
+    return $subset;
+}
+
 function get_products_recent() {
     $recent = array();
     $all = get_products_all();
@@ -274,11 +289,5 @@ function get_products_all() {
 
     return $products;
 }
-
-
-
-
-
-
 
 ?>
