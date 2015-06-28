@@ -1,5 +1,9 @@
 <?php
 
+require_once("inc/config.php");
 require_once('inc/products.php');
 echo "<pre>";
-var_dump(get_products_subset(30,30));
+
+foreach (get_product_sizes("101") as $size) {
+  var_dump($size);
+}

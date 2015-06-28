@@ -2,15 +2,13 @@
 
 	require_once("../inc/config.php");
 	require_once(ROOT_PATH . "inc/products.php");
-	$products = get_products_all();
 
 if (isset($_GET["id"])) {
-	$product_id = $_GET["id"];
-	if (isset($products[$product_id])) {
-		$product = $products[$product_id];
-	}
+	$product_id = intval($_GET["id"]);
+	$product = get_product_single($product_id);
 }
-if (!isset($product)) {
+
+if (empty($product)) {
 	header("Location: " . BASE_URL . "shirts/");
 	exit();
 }
@@ -47,8 +45,8 @@ include(ROOT_PATH . "inc/header.php"); ?>
 							</th>
 							<td>
 								<select name="os0" id="os0">
-									<?php foreach($product["sizes"] as $size) { ?>
-									<option value="<?php echo $size; ?>"><?php echo $size; ?> </option>
+									<?php foreach(get_product_sizes($product["sku"]) as $product) { ?>
+									<option value="<?php echo $product['size']; ?>"><?php echo $product['size']; ?> </option>
 									<?php } ?>
 								</select>
 							</td>
